@@ -19,7 +19,7 @@ loginForm.addEventListener('submit', async (e) => {
     alert('login failed:  recheck password' + error.message)
   } else {
     alert('login successful')
-   window.location.href = '/dashboard.html'
+   window.location.href = './dashboard.html'
   }
   
  })
