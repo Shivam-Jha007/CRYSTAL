@@ -1,0 +1,35 @@
+*{
+	font-family:cursive;
+	
+}
+#up{
+	background-image:url(upper.jpg);
+	height: 200px;
+	background-size:cover;
+	display:flex;
+	justify-content:space-evenly;
+	align-content:center;
+    color:black;	
+}
+#Q{
+	height:90px;
+}
+#newHabit{
+	width:200px;
+	height:50px;
+}
+#start{
+	width:70px;
+	height:50px;
+}
+#List{
+	height:400px;
+	background-color:#add8e6;
+	font-size:3px;
+}
+#l{
+	height:30px;
+	display:flex;
+	align-content:center;
+	justify-content:space-evenly;
+}
