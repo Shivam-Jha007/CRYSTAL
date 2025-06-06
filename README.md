@@ -45,7 +45,7 @@ A web-based Habit Tracker app with user authentication and a dashboard, built us
 
 ## 🌐 Live Site
 
-👉 [View the Live Habit Tracker] : https://github.com/Shivam-Jha007/CRYSTAL
+👉 [View the Live Habit Tracker] : https://shivam-jha007.github.io/CRYSTAL/
 
 ## 🙋‍♂️ Author
 
