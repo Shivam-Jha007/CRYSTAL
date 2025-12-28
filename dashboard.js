@@ -82,3 +82,5 @@ document.getElementById('logout').addEventListener('click', async () => {       
   }
 });
 
+//RLS ensures you can only change(select,update,delete) inside the row which belongs to you..but when u insert it doesnt know the row yet its actually not sure who u are so u must give uuid
+//every habit has its unique uuid

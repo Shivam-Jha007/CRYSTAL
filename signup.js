@@ -21,6 +21,7 @@ signupForm.addEventListener('submit', async (e) => {    //may wait for the value
     password
   })                                                      //the error part is used bcuz we only ned that part of the return statement not the full one
 
+
   if (error) {                                         //if error happens
     alert('Signup failed: ' + error.message)
   } else {                                             //if error doesnt happen we get a null instead so

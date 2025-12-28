@@ -1,7 +1,11 @@
 // supabaseClient.js
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'   //importing the supabase js library to access functions like createClient
 
-const supabaseUrl = 'https://eptuyyfmzdkecxabtkfh.supabase.co'
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVwdHV5eWZtemRrZWN4YWJ0a2ZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDcwMzEwNjMsImV4cCI6MjA2MjYwNzA2M30.MX8_LY48GWAQGOwlawHnFIa2SRA4lZckywOTK8mf8Yg'
+const supabaseUrl = "https://ulxcyotprieugovrshml.supabase.co"                       //url for the project
+const supabaseAnonKey = "sb_publishable_osKW74sJC2fdwP1cGFYT6A_m-hUYXis"   //unique identification for the DB
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
+export const supabase = createClient(supabaseUrl, supabaseAnonKey)    //“This creates a client that can SEND REQUESTS to Supabase.Supabase then decides what is allowed.”
+
+
+//auth.uid() is the database asking: “Who are you?”
+//user_id is the row answering: “I belong to this person.”
