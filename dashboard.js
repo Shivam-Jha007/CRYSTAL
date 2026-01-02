@@ -4,22 +4,41 @@ import { supabase } from './supabaseClient.js'               //importing supabas
 const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
 if (!user) window.location.href = '/login.html'
 
+document.querySelector('#deadline').addEventListener('change',async (g) =>{
+  g.preventDefault();
+  console.log(document.querySelector('#deadline')?.value);
+  getDate();
+})
+
 // 📝 Add habit
 document.getElementById('h-form').addEventListener('submit', async (e) => {    // inside of it You are defining a function that the browser will call later,when the submit event happens.
   e.preventDefault()
-  const title = document.getElementById('newHabit').value            
-
+  const title = document.getElementById('newHabit').value;
+  const value=document.querySelector('input[name="choice"]:checked')?.value;
+  const date=document.getElementById('tempD').value;
+  console.log(date);
+  if (date===null && value==='deadline'){
+    alert('Please select the deadline date');
+    return;
+  }
+  if (!value){
+    alert('please select the type of task ' );
+    return;
+  }
   const { error } = await supabase.from('habits').insert({      //in supabase habits table we are inserting the value for each column name manually
     user_id: user.id,
     title: title,
-    is_done: false
+    is_done: false,
+    task_type:value,
+    deadline:date
   })
 
   if (error) {                                                    //if error occuring on inserting
     alert('Error adding habit: ' + error.message)
   } else {
-    document.getElementById('newHabit').value = ''               //resetting the input field   
-    fetchHabits()
+    document.getElementById('newHabit').value = '';              //resetting the input field   
+    fetchHabits();
+
   }
 })
 
@@ -83,4 +102,16 @@ document.getElementById('logout').addEventListener('click', async () => {       
 });
 
 //RLS ensures you can only change(select,update,delete) inside the row which belongs to you..but when u insert it doesnt know the row yet its actually not sure who u are so u must give uuid
-//every habit has its unique uuid
+//every habit has its unique uuid~
+
+async function getDate() {
+  const d=document.createElement('input');
+  d.setAttribute('type','date');
+  d.setAttribute('id','tempD');
+  const container=document.getElementById('h-form');
+  container.appendChild(d);
+}
+
+
+
+//browsers dont wait and shouldnt wait for user input during execution so its all just event driven
