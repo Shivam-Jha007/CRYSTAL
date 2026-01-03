@@ -15,12 +15,16 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
   e.preventDefault()
   const title = document.getElementById('newHabit').value;
   const value=document.querySelector('input[name="choice"]:checked')?.value;
-  const date=document.getElementById('tempD').value;
+  let date=null;
   console.log(date);
-  if (date===null && value==='deadline'){
-    alert('Please select the deadline date');
-    return;
+  if (value==='deadline'){
+    date=document.getElementById('tempD').value;
+    if (date===null){
+      alert("Please select the end date")
+      return;
+    }
   }
+  
   if (!value){
     alert('please select the type of task ' );
     return;
@@ -38,6 +42,8 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
   } else {
     document.getElementById('newHabit').value = '';              //resetting the input field   
     fetchHabits();
+    const d=document.getElementById('tempD');
+    d.remove();
 
   }
 })
@@ -48,6 +54,7 @@ async function fetchHabits() {
     .from('habits')
     .select('*')
     .eq('user_id', user.id)
+    .eq('task_type','daily')
     .order('created_at', { ascending: false })
 
   const list = document.getElementById('habitList')
@@ -62,14 +69,29 @@ async function fetchHabits() {
       <span style="text-decoration:${habit.is_done ? 'line-through' : 'none'}">${habit.title}</span>
       <button data-delete="${habit.id}">🗑</button>
     `
-    list.appendChild(li)                                               //adding the next node in inside the list tag    
+    list.appendChild(li);                                               //adding the next node in inside the list tag    
+    
   })
+  const {data:Dhabits,error2}=await supabase .from('habits').select('*').eq('user_id',user.id).eq('task_type','deadline')
+    .order('created_at',{ascending:false});
+  const list2=document.querySelector('#DhabitList');
+  list2.innerHTML='';
+  Dhabits.forEach(Dhabit => {
+    const li=document.createElement('li');
+    li.innerHTML=`                                                       
+      <input type="checkbox" ${Dhabit.is_done ? 'checked' : ''} data-id="${Dhabit.id}" />
+      <span style="text-decoration:${Dhabit.is_done ? 'line-through' : 'none'}">${Dhabit.title}        valid till ${Dhabit.deadline}</span>
+      <button data-delete="${Dhabit.id}">🗑</button>
+    `
+    list2.appendChild(li);
+  })
+  
 }
 
 fetchHabits()                                                             //this call happpens without condititons  
 
 // ✅ Toggle complete
-document.getElementById('habitList').addEventListener('change', async (e) => {        //change signifies actions like checkbox,radio buttons,or dropdowns..
+document.getElementById('allList').addEventListener('change', async (e) => {        //change signifies actions like checkbox,radio buttons,or dropdowns..
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false                                    
@@ -80,7 +102,7 @@ document.getElementById('habitList').addEventListener('change', async (e) => {  
 })
 
 // ❌ Delete habit
-document.getElementById('habitList').addEventListener('click', async (e) => {
+document.getElementById('allList').addEventListener('click', async (e) => {
   if (e.target.tagName === 'BUTTON'  && e.target.dataset.delete) {
     const habitId = e.target.dataset.delete
     await supabase.from('habits').delete().eq('id', habitId);
@@ -115,3 +137,5 @@ async function getDate() {
 
 
 //browsers dont wait and shouldnt wait for user input during execution so its all just event driven
+// Never ask the DOM for truth at submit time.
+// The DOM only reflects state — it doesn’t own it.
