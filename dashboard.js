@@ -3,6 +3,9 @@ import { supabase } from './supabaseClient.js'               //importing supabas
 // 🟢 Ensure user is logged in
 const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
 if (!user) window.location.href = '/login.html'
+const comp=new Date().toISOString().split('T')[0];
+
+
 
 document.querySelector('#deadline').addEventListener('change',async (g) =>{
   g.preventDefault();
@@ -60,7 +63,7 @@ async function fetchHabits() {
   const list = document.getElementById('habitList')
   list.innerHTML = ''                                   //clearing the already present ones to remove duplicacy
 
-  habits.forEach(habit => {                                 // for each habit from the habits object(Containing all entres of habits)
+  habits.forEach(async habit => {                                 // for each habit from the habits object(Containing all entres of habits)
     const li = document.createElement('li')                    //creating the li tag for each element
 
     //injecting html as a string inside the li tag
@@ -69,13 +72,20 @@ async function fetchHabits() {
       <span style="text-decoration:${habit.is_done ? 'line-through' : 'none'}">${habit.title}</span>
       <button data-delete="${habit.id}">🗑</button>
     `
-    list.appendChild(li);                                               //adding the next node in inside the list tag    
+    list.appendChild(li);                                               //adding the next node in inside the list tag 
+    if (habit.last_done < comp){
+      li.style.textDecoration='none';
+      await supabase.from('habits').update({is_done:false}).eq('id',habit.id);
+      
+    }  
     
   })
   const {data:Dhabits,error2}=await supabase .from('habits').select('*').eq('user_id',user.id).eq('task_type','deadline')
     .order('created_at',{ascending:false});
   const list2=document.querySelector('#DhabitList');
   list2.innerHTML='';
+  const now=new Date();
+  console.log(now.getDate());
   Dhabits.forEach(Dhabit => {
     const li=document.createElement('li');
     li.innerHTML=`                                                       
@@ -83,7 +93,13 @@ async function fetchHabits() {
       <span style="text-decoration:${Dhabit.is_done ? 'line-through' : 'none'}">${Dhabit.title}        valid till ${Dhabit.deadline}</span>
       <button data-delete="${Dhabit.id}">🗑</button>
     `
+    
     list2.appendChild(li);
+    
+    if (Dhabit.deadline<comp){
+      console.log(now.getDate());
+      li.style.color="red";
+    }
   })
   
 }
@@ -95,8 +111,8 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false                                    
-
-    await supabase.from('habits').update({ is_done: isDone }).eq('id', habitId)            //finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
+    const today=
+    await supabase.from('habits').update({ is_done: isDone ,last_done:comp}).eq('id', habitId)            //finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
     fetchHabits()
   }
 })
@@ -106,7 +122,7 @@ document.getElementById('allList').addEventListener('click', async (e) => {
   if (e.target.tagName === 'BUTTON'  && e.target.dataset.delete) {
     const habitId = e.target.dataset.delete
     await supabase.from('habits').delete().eq('id', habitId);
-    fetchHabits()
+    fetchHabits() 
   }
 })
 
