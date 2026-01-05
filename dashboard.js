@@ -111,7 +111,7 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false                                    
-    const today=
+
     await supabase.from('habits').update({ is_done: isDone ,last_done:comp}).eq('id', habitId)            //finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
     fetchHabits()
   }
