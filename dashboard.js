@@ -63,7 +63,7 @@ async function fetchHabits() {
   const list = document.getElementById('habitList')
   list.innerHTML = ''                                   //clearing the already present ones to remove duplicacy
 
-  habits.forEach(async habit => {                                 // for each habit from the habits object(Containing all entres of habits)
+  habits.forEach(async habit => {                                 //  for each habit from the habits object(Containing all entres of habits)
     const li = document.createElement('li')                    //creating the li tag for each element
 
     //injecting html as a string inside the li tag
