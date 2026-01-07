@@ -73,6 +73,10 @@ async function fetchHabits() {
       <button data-delete="${habit.id}">🗑</button>
     `
     list.appendChild(li);                                               //adding the next node in inside the list tag 
+    console.log("today",comp);
+    console.log(`${habit.title} last done on ${habit.last_done} `)
+    console.log(`${ habit.last_done.split('T')[0]}  the laast_done parsed value`);
+
     if (habit.last_done < comp){
       li.style.textDecoration='none';
       await supabase.from('habits').update({is_done:false}).eq('id',habit.id);
