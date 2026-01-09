@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient.js'               //importing supabas
 // 🟢 Ensure user is logged in
 const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
 if (!user) window.location.href = '/login.html'
-const comp=new Date().toISOString().split('T')[0];
+const comp=new Date().toLocaleDateString().split('T')[0];
 
 
 
@@ -65,8 +65,9 @@ async function fetchHabits() {
 
   habits.forEach(async habit => {                                 //  for each habit from the habits object(Containing all entres of habits)
     const li = document.createElement('li') ;                   //creating the li tag for each element
-    const truth=habit.last_done===comp;
-    habit.is_done=(truth);
+    const last=habit.last_done?habit.last_done.split('T')[0] : null;
+    const truth=last===comp;
+    habit.is_done=truth;
 
     //injecting html as a string inside the li tag
     li.innerHTML = `                                                       
@@ -76,7 +77,7 @@ async function fetchHabits() {
     `
     list.appendChild(li);                                               //adding the next node in inside the list tag 
     console.log("today",comp);
-    console.log(`${habit.title} last done on ${habit.last_done} `)
+    console.log(`${habit.title} last done on ${habit.last_done} truth ${truth} `)
     //console.log(`${ habit.last_done.split('T')[0]}  the laast_done parsed value`);  parsing the last-done to ISOstring form. 
     
   })
