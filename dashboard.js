@@ -64,7 +64,9 @@ async function fetchHabits() {
   list.innerHTML = ''                                   //clearing the already present ones to remove duplicacy
 
   habits.forEach(async habit => {                                 //  for each habit from the habits object(Containing all entres of habits)
-    const li = document.createElement('li')                    //creating the li tag for each element
+    const li = document.createElement('li') ;                   //creating the li tag for each element
+    const truth=habit.last_done===comp;
+    habit.is_done=(truth);
 
     //injecting html as a string inside the li tag
     li.innerHTML = `                                                       
@@ -75,13 +77,7 @@ async function fetchHabits() {
     list.appendChild(li);                                               //adding the next node in inside the list tag 
     console.log("today",comp);
     console.log(`${habit.title} last done on ${habit.last_done} `)
-    console.log(`${ habit.last_done.split('T')[0]}  the laast_done parsed value`);
-
-    if (habit.last_done < comp){
-      li.style.textDecoration='none';
-      await supabase.from('habits').update({is_done:false}).eq('id',habit.id);
-      
-    }  
+    //console.log(`${ habit.last_done.split('T')[0]}  the laast_done parsed value`);  parsing the last-done to ISOstring form. 
     
   })
   const {data:Dhabits,error2}=await supabase .from('habits').select('*').eq('user_id',user.id).eq('task_type','deadline')
