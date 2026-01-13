@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient.js'               //importing supabas
 // 🟢 Ensure user is logged in
 const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
 if (!user) window.location.href = '/login.html'
-const comp=new Date().toLocaleDateString().split('T')[0];
+const comp=new Date().toLocaleDateString().split('T')[0];        //.toISOString is utc =india+5:30 hrs .localdateString returns Indian timeline as per timezone
 
 
 
@@ -14,7 +14,7 @@ document.querySelector('#deadline').addEventListener('change',async (g) =>{
 })
 
 // 📝 Add habit
-document.getElementById('h-form').addEventListener('submit', async (e) => {    // inside of it You are defining a function that the browser will call later,when the submit event happens.
+document.getElementById('h-form').addEventListener('submit', async (e) => {    //  inside of it You are defining a function that the browser will call later,when the submit event happens.
   e.preventDefault()
   const title = document.getElementById('newHabit').value;
   const value=document.querySelector('input[name="choice"]:checked')?.value;
