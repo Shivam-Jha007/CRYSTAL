@@ -14,13 +14,13 @@ document.querySelector('#deadline').addEventListener('change',async (g) =>{
 })
 
 // 📝 Add habit
-document.getElementById('h-form').addEventListener('submit', async (e) => {    //  inside of it You are defining a function that the browser will call later,when the submit event happens.
+document.getElementById('h-form').addEventListener('submit', async (e) => {    //inside of it You are defining a function that the browser will call later,when the submit event happens.
   e.preventDefault()
   const title = document.getElementById('newHabit').value;
   const value=document.querySelector('input[name="choice"]:checked')?.value;
   let date=null;
   console.log(date);
-  if (value==='deadline'){
+  if (value==='deadline'){                              //
     date=document.getElementById('tempD').value;
     if (date===null){
       alert("Please select the end date")
