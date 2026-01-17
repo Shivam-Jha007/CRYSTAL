@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient.js'               //importing supabas
 const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
 if (!user) window.location.href = '/login.html'
 const comp=new Date().toLocaleDateString().split('T')[0];        //.toISOString is utc =india+5:30 hrs .localdateString returns Indian timeline as per timezone
+ 
 
 
 
@@ -20,11 +21,11 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
   const value=document.querySelector('input[name="choice"]:checked')?.value;
   let date=null;
   console.log(date);
-  if (value==='deadline'){                              //
+  if (value==='deadline'){                              
     date=document.getElementById('tempD').value;
     if (date===null){
       alert("Please select the end date")
-      return;
+      return; 
     }
   }
   
