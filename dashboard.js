@@ -3,8 +3,30 @@ import { supabase } from './supabaseClient.js'               //importing supabas
 // 🟢 Ensure user is logged in
 const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
 if (!user) window.location.href = '/login.html'
-const comp=new Date().toLocaleDateString().split('T')[0];        //.toISOString is utc =india+5:30 hrs .localdateString returns Indian timeline as per timezone
+//.toISOString is utc =india+5:30 hrs .localdateString returns Indian timeline as per timezone
+
+
+
+function getLocalString(){
+  const d=new Date();
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,"0");
+  const day=String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+function getyesterday(){
+  const d=new Date();
+  d.setDate(d.getDate()-1);
+  const y=d.getFullYear();
+  const m=String(d.getMonth()+1).padStart(2,"0");
+  const day=String(d.getDate()).padStart(2,"0");
+  return `${y}-${m}-${day}`;
+}
+console.log(getLocalString());
+const comp=getLocalString();
  
+
+
 
 
 
@@ -24,7 +46,7 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
   if (value==='deadline'){                              
     date=document.getElementById('tempD').value;
     if (date===null){
-      alert("Please select the end date")
+      alert("Please select the end date");
       return; 
     }
   }
@@ -38,7 +60,8 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
     title: title,
     is_done: false,
     task_type:value,
-    deadline:date
+    deadline:date,
+    streak: 0
   })
 
   if (error) {                                                    //if error occuring on inserting
@@ -66,9 +89,12 @@ async function fetchHabits() {
 
   habits.forEach(async habit => {                                 //  for each habit from the habits object(Containing all entres of habits)
     const li = document.createElement('li') ;                   //creating the li tag for each element
-    const last=habit.last_done?habit.last_done.split('T')[0] : null;
-    const truth=last===comp;
+    const last=habit.last_done.split('T')[0];
+    const truth=(last===comp);
     habit.is_done=truth;
+    console.log("last:", last, typeof last);
+    console.log("comp:", comp, typeof comp);
+
 
     //injecting html as a string inside the li tag
     li.innerHTML = `                                                       
@@ -106,15 +132,30 @@ async function fetchHabits() {
   
 }
 
+
+
+
 fetchHabits()                                                             //this call happpens without condititons  
 
 // ✅ Toggle complete
 document.getElementById('allList').addEventListener('change', async (e) => {        //change signifies actions like checkbox,radio buttons,or dropdowns..
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
-    const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false                                    
+    const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
+    const s=0;
+    const {data : lst_dun,error}=await.from('habits').select('*')eq()
+    if (last_done===comp){
+      s=streak;
+    }  
+    else if(last_done===getyesterday()){
+      s=streak+1;
+    } 
+    else{
+      s=1;
+    }                               
 
-    await supabase.from('habits').update({ is_done: isDone ,last_done:comp}).eq('id', habitId)            //finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
+    await supabase.from('habits').update({ is_done: isDone ,last_done:comp,streak:s}).eq('id', habitId)            //finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
+
     fetchHabits()
   }
 })
