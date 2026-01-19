@@ -55,7 +55,7 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
     alert('please select the type of task ' );
     return;
   }
-  const { error } = await supabase.from('habits').insert({      //in supabase habits table we are inserting the value for each column name manually
+  const { error } = await supabase.from('habits').insert({       //in supabase habits table we are inserting the value for each column name manually
     user_id: user.id,
     title: title,
     is_done: false,
