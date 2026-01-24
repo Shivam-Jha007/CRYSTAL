@@ -126,7 +126,7 @@ async function fetchHabits() {
     
     if (Dhabit.deadline<comp){
       console.log(now.getDate());
-      li.style.color="red";
+      li.style.color="red";           
     }
   })
   
@@ -138,7 +138,7 @@ async function fetchHabits() {
 fetchHabits()                                                             //this call happpens without condititons  
 
 // ✅ Toggle complete
-document.getElementById('allList').addEventListener('change', async (e) => {        //change signifies actions like checkbox,radio buttons,or dropdowns..
+document.getElementById('allList').addEventListener('change', async (e) => {        //change  signifies actions like checkbox,radio buttons,or dropdowns..
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
