@@ -142,12 +142,13 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
-    const s=0;
-    const {data : lst_dun,error}=await.from('habits').select('*')eq()
-    if (last_done===comp){
+    var s=0;
+    const {data : lst_dun,error}=await supabase.from('habits').select('*').eq('user-id',habitId).eq('task-type','daily');   //fetching the  last done date for the daily habits 
+    
+    if (lst_dun===comp){
       s=streak;
     }  
-    else if(last_done===getyesterday()){
+    else if(lst_dun===getyesterday()){
       s=streak+1;
     } 
     else{
