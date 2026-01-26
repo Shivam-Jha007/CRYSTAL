@@ -1,14 +1,25 @@
 import { supabase } from './supabaseClient.js'               //importing supabase to let us use all itas function
 
 // 🟢 Ensure user is logged in
-const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed
+const { data: { user } } = await supabase.auth.getUser()       //we check the data values inside the object returned by getuser function it returns user =null if not auth.No inputs needed 
+
+
+
+
 if (!user) window.location.href = '/login.html'
 //.toISOString is utc =india+5:30 hrs .localdateString returns Indian timeline as per timezone
 
 
 
+
+
+
+
+
+
+
 function getLocalString(){
-  const d=new Date();
+  const d=new Date();                                                                                                                                                                                                                                                                                  
   const y=d.getFullYear();
   const m=String(d.getMonth()+1).padStart(2,"0");
   const day=String(d.getDate()).padStart(2,"0");
@@ -35,6 +46,10 @@ document.querySelector('#deadline').addEventListener('change',async (g) =>{
   console.log(document.querySelector('#deadline')?.value);
   getDate();
 })
+
+
+
+
 
 // 📝 Add habit
 document.getElementById('h-form').addEventListener('submit', async (e) => {    //inside of it You are defining a function that the browser will call later,when the submit event happens.
@@ -64,16 +79,29 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
     streak: 0
   })
 
+
+
+
+
+
   if (error) {                                                    //if error occuring on inserting
-    alert('Error adding habit: ' + error.message)
+    alert('Error adding habit: ' + error.message);
   } else {
     document.getElementById('newHabit').value = '';              //resetting the input field   
     fetchHabits();
     const d=document.getElementById('tempD');
     d.remove();
-
   }
+  
 })
+
+
+
+
+
+
+
+
 
 // 📋 Fetch and display habits
 async function fetchHabits() {
@@ -84,8 +112,8 @@ async function fetchHabits() {
     .eq('task_type','daily')
     .order('created_at', { ascending: false })
 
-  const list = document.getElementById('habitList')
-  list.innerHTML = ''                                   //clearing the already present ones to remove duplicacy
+  const list = document.getElementById('habitList');
+  list.innerHTML = '';                                  //clearing the already present ones to remove duplicacy
 
   habits.forEach(async habit => {                                 //  for each habit from the habits object(Containing all entres of habits)
     const li = document.createElement('li') ;                   //creating the li tag for each element
@@ -135,7 +163,20 @@ async function fetchHabits() {
 
 
 
+
+
+
+
+
+
+
+
+
 fetchHabits()                                                             //this call happpens without condititons  
+
+
+
+
 
 // ✅ Toggle complete
 document.getElementById('allList').addEventListener('change', async (e) => {        //change  signifies actions like checkbox,radio buttons,or dropdowns..
@@ -143,13 +184,13 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
     var s=0;
-    const {data : lst_dun,error}=await supabase.from('habits').select('*').eq('user-id',habitId).eq('task-type','daily');   //fetching the  last done date for the daily habits 
-    
+    const {data : lst_dun,error}=await supabase.from('habits').select('last_done').eq('user-id',habitId).eq('task-type','daily');   //fetching the  last done date for the daily habits 
+    const {data : str ,errort} = await supabase.from('habits').select('streak').eq('user_id',habitId).eq('task-type','daily');
     if (lst_dun===comp){
-      s=streak;
+      s=str;
     }  
     else if(lst_dun===getyesterday()){
-      s=streak+1;
+      s=str+1;
     } 
     else{
       s=1;
@@ -161,6 +202,13 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
   }
 })
 
+
+
+
+
+
+
+
 // ❌ Delete habit
 document.getElementById('allList').addEventListener('click', async (e) => {
   if (e.target.tagName === 'BUTTON'  && e.target.dataset.delete) {
@@ -169,6 +217,10 @@ document.getElementById('allList').addEventListener('click', async (e) => {
     fetchHabits() 
   }
 })
+
+
+
+
 
 // 🚪 Logout
 document.getElementById('logout').addEventListener('click', async () => {             // on clicking the logout button
@@ -183,6 +235,11 @@ document.getElementById('logout').addEventListener('click', async () => {       
   }
 });
 
+
+
+
+
+
 //RLS ensures you can only change(select,update,delete) inside the row which belongs to you..but when u insert it doesnt know the row yet its actually not sure who u are so u must give uuid
 //every habit has its unique uuid~
 
@@ -196,6 +253,8 @@ async function getDate() {
 
 
 
+
+             
 //browsers dont wait and shouldnt wait for user input during execution so its all just event driven
 // Never ask the DOM for truth at submit time.
-// The DOM only reflects state — it doesn’t own it.
+// The DOM only reflects state — it doesn’t own it...
