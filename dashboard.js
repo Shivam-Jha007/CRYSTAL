@@ -89,8 +89,7 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
   } else {
     document.getElementById('newHabit').value = '';              //resetting the input field   
     fetchHabits();
-    const d=document.getElementById('tempD');
-    d.remove();
+    
   }
   
 })
@@ -117,7 +116,7 @@ async function fetchHabits() {
 
   habits.forEach(async habit => {                                 //  for each habit from the habits object(Containing all entres of habits)
     const li = document.createElement('li') ;                   //creating the li tag for each element
-    const last=habit.last_done.split('T')[0];
+    const last=habit.last_done;
     const truth=(last===comp);
     habit.is_done=truth;
     console.log("last:", last, typeof last);
@@ -185,7 +184,7 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
     var s=0;
     const {data : lst_dun,error}=await supabase.from('habits').select('last_done').eq('user-id',habitId).eq('task-type','daily');   //fetching the  last done date for the daily habits 
-    const {data : str ,errort} = await supabase.from('habits').select('streak').eq('user_id',habitId).eq('task-type','daily');
+    const {data : str ,errort} = await supabase.from('habits').select('streak').eq('user_id',habitId).eq('task_type','daily');
     if (lst_dun===comp){
       s=str;
     }  
