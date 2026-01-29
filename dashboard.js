@@ -89,7 +89,8 @@ document.getElementById('h-form').addEventListener('submit', async (e) => {    /
   } else {
     document.getElementById('newHabit').value = '';              //resetting the input field   
     fetchHabits();
-    
+    const d=document.getElementById('tempD');
+    d.remove();
   }
   
 })
