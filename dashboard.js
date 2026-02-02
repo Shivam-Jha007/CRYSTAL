@@ -185,7 +185,7 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
     var s=0;
     const {data : lst_dun,error}=await supabase.from('habits').select('last_done').eq('user-id',habitId).eq('task-type','daily');   //fetching the  last done date for the daily habits 
-    const {data : str ,errort} = await supabase.from('habits').select('streak').eq('user_id',habitId).eq('task_type','daily');
+    const {data : str ,errort} = await supabase.from('habits').select('streak').eq('user_id',habitId).eq('task_type','daily');      //.select() always returns an array
     if (lst_dun===comp){
       s=str;
     }  
