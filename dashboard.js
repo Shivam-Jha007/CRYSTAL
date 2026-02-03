@@ -182,15 +182,18 @@ fetchHabits()                                                             //this
 document.getElementById('allList').addEventListener('change', async (e) => {        //change  signifies actions like checkbox,radio buttons,or dropdowns..
   if (e.target.type === 'checkbox') {
     const habitId = e.target.dataset.id    //“Give me the value stored in data-id of the element that triggered the event.”
+    console.log(habitId);
     const isDone = e.target.checked         //.checked only exists on checkboxes or radio buttons and returnds either true or false  
     var s=0;
-    const {data : lst_dun,error}=await supabase.from('habits').select('last_done').eq('user-id',habitId).eq('task-type','daily');   //fetching the  last done date for the daily habits 
-    const {data : str ,errort} = await supabase.from('habits').select('streak').eq('user_id',habitId).eq('task_type','daily');      //.select() always returns an array
-    if (lst_dun===comp){
-      s=str;
-    }  
-    else if(lst_dun===getyesterday()){
-      s=str+1;
+    const {data : data ,error}=await supabase.from('habits').select('*').eq('id',habitId);   //fetching the  last done date for the daily habits  //.select() always returns an array
+    console.log(data);
+    const habit = data[0]
+    const lastDone = habit.last_done
+    const currentStreak = habit.streak
+    console.log(lastDone);
+
+    if(lastDone===getyesterday()){
+      s=currentStreak+1;
     } 
     else{
       s=1;
