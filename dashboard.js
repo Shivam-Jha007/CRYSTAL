@@ -199,7 +199,7 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
       s=1;
     }                               
 
-    await supabase.from('habits').update({ is_done: isDone ,last_done:comp,streak:s}).eq('id', habitId)            //finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
+    await supabase.from('habits').update({ is_done: isDone ,last_done:comp,streak:s}).eq('id', habitId)            // finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
 
     fetchHabits()
   }
