@@ -151,7 +151,7 @@ async function fetchHabits() {
     const li=document.createElement('li');
     li.innerHTML=`                                                       
       <input type="checkbox" ${Dhabit.is_done ? 'checked' : ''} data-id="${Dhabit.id}" />
-      <span style="text-decoration:${Dhabit.is_done ? 'line-through' : 'none'}">${Dhabit.title}        valid till ${Dhabit.deadline}</span>
+      <span style="text-decoration:${Dhabit.is_done ? 'line-through' : 'none'}">${Dhabit.title}valid till${Dhabit.deadline}</span>
       <button data-delete="${Dhabit.id}">🗑</button>
       <span style="margin-left:20px">🎯🎯🎯</span>
     `
