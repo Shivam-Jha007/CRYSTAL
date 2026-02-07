@@ -23,7 +23,6 @@
 	height:50px;
 }
 #List{
-	height:400px;
 	background-color:#add8e6;
 	font-size:15px;
 }
@@ -33,4 +32,10 @@
 	align-content:center;
 	justify-content:space-evenly;
 	
+}
+#Space{
+	margin-left: 45px;
+} 
+li{
+	margin-bottom: 30px;
 }

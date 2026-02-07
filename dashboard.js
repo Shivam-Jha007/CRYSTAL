@@ -122,6 +122,7 @@ async function fetchHabits() {
     habit.is_done=truth;
     console.log("last:", last, typeof last);
     console.log("comp:", comp, typeof comp);
+    console.log("Streak:",habit.streak);
 
 
     //injecting html as a string inside the li tag
@@ -129,7 +130,11 @@ async function fetchHabits() {
       <input type="checkbox" ${habit.is_done ? 'checked' : ''} data-id="${habit.id}" />
       <span style="text-decoration:${habit.is_done ? 'line-through' : 'none'}">${habit.title}</span>
       <button data-delete="${habit.id}">🗑</button>
-    `
+      <span id="Space">${habit.streak} days streak!!! 🔥🔥🔥Keep going!!🎯</span>       
+    `                                                                                
+    //--<span>  doesnt need to start from newLine only
+    
+
     list.appendChild(li);                                               //adding the next node in inside the list tag 
     console.log("today",comp);
     console.log(`${habit.title} last done on ${habit.last_done} truth ${truth} `)
@@ -148,6 +153,7 @@ async function fetchHabits() {
       <input type="checkbox" ${Dhabit.is_done ? 'checked' : ''} data-id="${Dhabit.id}" />
       <span style="text-decoration:${Dhabit.is_done ? 'line-through' : 'none'}">${Dhabit.title}        valid till ${Dhabit.deadline}</span>
       <button data-delete="${Dhabit.id}">🗑</button>
+      <span style="margin-left:20px">🎯🎯🎯</span>
     `
     
     list2.appendChild(li);
@@ -190,18 +196,23 @@ document.getElementById('allList').addEventListener('change', async (e) => {    
     const habit = data[0]
     const lastDone = habit.last_done
     const currentStreak = habit.streak
+    console.log(currentStreak);
     console.log(lastDone);
 
-    if(lastDone===getyesterday()){
+    if(lastDone===getyesterday()){     //comparing the dates
       s=currentStreak+1;
+      await supabase.from('habits').update({ is_done: isDone ,last_done:comp,streak:s}).eq('id', habitId)            // finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
     } 
-    else{
+    else if(lastDone===getLocalString()){
+
+    }else{
       s=1;
-    }                               
+      await supabase.from('habits').update({ is_done: isDone ,last_done:comp,streak:s}).eq('id', habitId)            // finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
+    }                              
 
-    await supabase.from('habits').update({ is_done: isDone ,last_done:comp,streak:s}).eq('id', habitId)            // finding and updating  the specific habit the ROW LEVEL SECURITY handles the uuid we dont need to manually provide it 
 
-    fetchHabits()
+
+    fetchHabits();
   }
 })
 
