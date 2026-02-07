@@ -1,55 +1,54 @@
-# Habit Tracker 🗓️
+# CRYSTAL — Habit Tracker & Daily Streak System
 
-A web-based Habit Tracker app with user authentication and a dashboard, built using HTML, CSS, JavaScript, and Supabase.
+CRYSTAL is a web-based habit tracker designed to help users plan daily tasks, track progress, and maintain consistency through a streak-based system.
 
-## 🌟 Features
-
-- ✅ User login and signup with authentication
-- 🏠 Multiple pages: Login, Signup, and Dashboard
-- 🔄 Track and manage daily habits on the dashboard
-- ☁️ Data stored securely using Supabase backend
-- 📱 Responsive design with separate stylesheets for main pages and dashboard
-
-## 🛠️ Built With
-
-- **HTML/CSS**
-  - `login.html`, `signup.html`, `index.html`, `dashboard.html`
-  - `style.css` (for login, signup, index pages)
-  - `style2.css` (for dashboard page)
-- **JavaScript**
-  - `login.js`
-  - `signup.js`
-  - `dashboard.js`
-- **Supabase** – Backend database and authentication
-
-## 📂 Folder Structure
-/CRYSTAL
-│
-├── login.html # User login page
-├── signup.html # User signup page
-├── index.html # Main/home page
-├── dashboard.html # User dashboard
-├── style.css # Styles for login, signup, and index pages
-├── style2.css # Styles for dashboard page
-├── login.js # Login page JavaScript
-├── signup.js # Signup page JavaScript
-├── dashboard.js # Dashboard page JavaScript
-└── README.md # This file
-
-
-## 🚀 Getting Started
-
-1. Open `login.html` or `signup.html` in your browser to start.
-2. Authenticate via Supabase backend.
-3. Use the dashboard to track and manage your habits.
-
-## 🌐 Live Site
-
-👉 [View the Live Habit Tracker] : https://shivam-jha007.github.io/CRYSTAL/
-
-## 🙋‍♂️ Author
-
-Built by Shivam Jha. Feedback and contributions are welcome!
+The core challenge of this project was implementing **reliable daily streak logic**, which required careful handling of dates, resets, and edge cases.
 
 ---
 
+## ✨ Key Features
+
+- User authentication (login & signup) using Supabase
+- Create, update, and delete habits/tasks
+- Support for both **daily habits** and **deadline-based tasks**
+- Automatic daily reset of habit status at midnight
+- **Streak calculation for daily habits**
+- Secure backend storage using Supabase
+- Responsive multi-page UI (auth pages + dashboard)
+
+---
+
+## 🧠 Engineering Challenges & Learnings
+
+- Implementing streak logic without off-by-one errors
+- Handling date comparisons between today and yesterday
+- Managing async data fetching and state updates
+- Choosing a **simple, reliable approach** over over-engineering
+- Debugging issues that only appeared after real usage
+
+This project reinforced the importance of **shipping a working solution** rather than chasing theoretical perfection.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Frontend:** HTML, CSS, JavaScript
+- **Backend & Auth:** Supabase
+- **Architecture:** Multi-page app with separated logic for auth and dashboard
+
+---
+
+## 🚀 How to Run
+
+1. Open `login.html` or `signup.html`
+2. Authenticate via Supabase
+3. Use the dashboard to manage habits and track streaks
+
+---
+
+## 📌 Project Status
+
+This project is complete as **v1** and intentionally frozen to focus on new builds and higher-impact learning.
+
+
+---The project is live at  https://shivam-jha007.github.io/CRYSTAL/
