@@ -4,53 +4,59 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Crystal</title>
-  <p id="err msg" ></p>
-  <Link rel="stylesheet" href="style2.css">
-  
+  <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-    <header>
-	<div id="up">
-	  <h1>Build it: BRICK BY BRICK !!</h1>
-	</div>
-	</header>
-	<main>
-    <div id="Q"> 
-    <form id="h-form">
-	    <input type="text" id="newHabit"  placeholder="What habit you want to  build? " required></input>
-	    
 
-    <legend>Please select the type of task:</legend>
-    <div>
-      <input type="radio" id="daily" name="choice" value="daily" />
-      <label for="daily">DAILY</label>
+  <header>
+    <div class="top-nav">
+      <a href="our-motive.html" id="motiveLink">Our Motive</a>
+    </div>
+    <div id="up">
+      <h1>Build it: BRICK BY BRICK !!</h1>
+      <p class="subtitle">Track your habits. Stay consistent.</p>
+    </div>
+  </header>
 
-      <input type="radio" id="deadline" name="choice" value="deadline" />
-      <label for="deadline">DEADLINE<hone/label>
-   
-	</div>
-	<button type="submit" id="start">Start</button>
-	</form>
-   </div>
-   <div id="allList">
-   <div id="List">
-    <span>DAILY GOALS</span>
-    <ul id="habitList">
-	  </ul>
-	</div>
-  <div id='List2'>
-    <span>DEADLINE BASED TASKS</span>
-    <ul id="DhabitList">
-    </ul>
-  </div>
-  </div>
-    </main>
-	<footer>
-	  <div style="text-align: center" id="l">
-	    <button id="logout">LogOut</button>
-	  </div>
-	</footer>
-	
-	<script type="module" src="dashboard.js"></script>	
+  <main>
+    <div id="Q">
+      <form id="h-form">
+        <input type="text" id="newHabit" placeholder="What habit do you want to build?" required />
+
+        <div class="radio-group">
+          <legend>Select type of task:</legend>
+          <label for="daily" class="radio-label">
+            <input type="radio" id="daily" name="choice" value="daily" />
+            Daily
+          </label>
+          <label for="deadline" class="radio-label">
+            <input type="radio" id="deadline" name="choice" value="deadline" />
+            Deadline
+          </label>
+        </div>
+
+        <button type="submit" id="start">+ Add</button>
+      </form>
+    </div>
+
+    <div id="allList">
+      <div id="List">
+        <span>DAILY GOALS</span>
+        <ul id="habitList"></ul>
+      </div>
+      <div id="List2">
+        <span>DEADLINE BASED TASKS</span>
+        <ul id="DhabitList"></ul>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div style="text-align: center" id="l">
+      <button id="logout">Log Out</button>
+    </div>
+  </footer>
+
+  <script type="module" src="dashboard.js"></script>
 </body>
 </html>
